@@ -17,26 +17,17 @@
 package org.apache.tika.metadata;
 
 /**
- * A collection of Dublin Core metadata names.
- *
- * @see <a href="http://dublincore.org">dublincore.org</a>
- *
+ * Metadata keys for the XMP DublinCore schema. This differs from {@link DublinCore} in
+ * that this data must derive strictly from XMP. Tika applies logic to normalize
+ * metadata keys and values into {@link DublinCore}. This process can make it difficult to determine
+ * if the underlying metadata derived from a literal XMP component or from another source within the file.
  * <p>
- * These keys are intended to be a unifying normalization of information
- * within a file. For some formats, like PDF, where there may be conflicting
- * information in different parts of the file (xmp vs. docinfo) for the
- * same metadata key, we do what we can, and these keys represent a
- * normalization of metadata values within a file.
- * <p>
- * For Dublin Core information that derives specifically and only from
- * XMP, see {@link XMPDC}.
+ * See <a href="https://issues.apache.org/jira/browse/TIKA-4444">TIKA-4444</a>.
  */
-public interface DublinCore {
+public interface XMPDC {
 
-    public static final String NAMESPACE_URI_DC = "http://purl.org/dc/elements/1.1/";
-    public static final String NAMESPACE_URI_DC_TERMS = "http://purl.org/dc/terms/";
-    public static final String PREFIX_DC = "dc";
-    public static final String PREFIX_DC_TERMS = "dcterms";
+    String PREFIX_DC = "xmp" + Metadata.NAMESPACE_PREFIX_DELIMITER + "dc";
+    String PREFIX_DC_TERMS = "xmp" + Metadata.NAMESPACE_PREFIX_DELIMITER + "dcterms";
 
     /**
      * Typically, Format may include the media-type or dimensions of the
@@ -46,8 +37,8 @@ public interface DublinCore {
      * to select a value from a controlled vocabulary (for example, the list
      * of Internet Media Types [MIME] defining computer media formats).
      */
-	Property FORMAT = Property.internalText(
-    		PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "format");
+    Property FORMAT = Property.internalText(
+            PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "format");
 
     /**
      * Recommended best practice is to identify the resource by means of
@@ -57,14 +48,14 @@ public interface DublinCore {
      * the Digital Object Identifier (DOI) and the International Standard
      * Book Number (ISBN).
      */
-	Property IDENTIFIER = Property.internalText(
-    		PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "identifier");
+    Property IDENTIFIER = Property.internalText(
+            PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "identifier");
 
     /**
      * Date on which the resource was changed.
      */
-	Property MODIFIED = Property.internalDate(
-		PREFIX_DC_TERMS + Metadata.NAMESPACE_PREFIX_DELIMITER + "modified");
+    Property MODIFIED = Property.internalDate(
+            PREFIX_DC_TERMS + Metadata.NAMESPACE_PREFIX_DELIMITER + "modified");
 
     /**
      * An entity responsible for making contributions to the content of the
@@ -72,8 +63,8 @@ public interface DublinCore {
      * or a service. Typically, the name of a Contributor should be used to
      * indicate the entity.
      */
-	Property CONTRIBUTOR = Property.internalTextBag(
-    		PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "contributor");
+    Property CONTRIBUTOR = Property.internalTextBag(
+            PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "contributor");
 
     /**
      * The extent or scope of the content of the resource. Coverage will
@@ -85,22 +76,22 @@ public interface DublinCore {
      * appropriate, named places or time periods be used in preference to
      * numeric identifiers such as sets of coordinates or date ranges.
      */
-	Property COVERAGE = Property.internalText(
-    		PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "coverage");
+    Property COVERAGE = Property.internalText(
+            PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "coverage");
 
     /**
      * An entity primarily responsible for making the content of the resource.
      * Examples of a Creator include a person, an organisation, or a service.
      * Typically, the name of a Creator should be used to indicate the entity.
      */
-	Property CREATOR = Property.internalTextBag(
-    		PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "creator");
+    Property CREATOR = Property.internalTextBag(
+            PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "creator");
 
     /**
      * Date of creation of the resource.
      */
-        Property CREATED = Property.internalDate(
-                PREFIX_DC_TERMS + Metadata.NAMESPACE_PREFIX_DELIMITER + "created");
+    Property CREATED = Property.internalDate(
+            PREFIX_DC_TERMS + Metadata.NAMESPACE_PREFIX_DELIMITER + "created");
 
     /**
      * A date associated with an event in the life cycle of the resource.
@@ -109,8 +100,8 @@ public interface DublinCore {
      * defined in a profile of ISO 8601 [W3CDTF] and follows the YYYY-MM-DD
      * format.
      */
-	Property DATE = Property.internalDate(
-    		PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "date");
+    Property DATE = Property.internalDate(
+            PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "date");
 
     /**
      * An account of the content of the resource. Description may include
@@ -118,8 +109,8 @@ public interface DublinCore {
      * a graphical representation of content or a free-text account of
      * the content.
      */
-	Property DESCRIPTION = Property.internalText(
-    		PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "description");
+    Property DESCRIPTION = Property.internalText(
+            PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "description");
 
     /**
      * A language of the intellectual content of the resource. Recommended
@@ -128,24 +119,24 @@ public interface DublinCore {
      * tags with optional subtags. Examples include "en" or "eng" for English,
      * "akk" for Akkadian, and "en-GB" for English used in the United Kingdom.
      */
-	Property LANGUAGE = Property.internalText(
-    		PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "language");
+    Property LANGUAGE = Property.internalText(
+            PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "language");
 
     /**
      * An entity responsible for making the resource available. Examples of
      * a Publisher include a person, an organisation, or a service. Typically,
      * the name of a Publisher should be used to indicate the entity.
      */
-	Property PUBLISHER = Property.internalText(
-    		PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "publisher");
+    Property PUBLISHER = Property.internalText(
+            PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "publisher");
 
     /**
      * A reference to a related resource. Recommended best practice is to
      * reference the resource by means of a string or number conforming to
      * a formal identification system.
      */
-	Property RELATION = Property.internalText(
-    		PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "relation");
+    Property RELATION = Property.internalText(
+            PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "relation");
 
     /**
      * Information about rights held in and over the resource. Typically,
@@ -156,8 +147,8 @@ public interface DublinCore {
      * is absent, no assumptions can be made about the status of these and
      * other rights with respect to the resource.
      */
-	Property RIGHTS = Property.internalText(
-    		PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "rights");
+    Property RIGHTS = Property.internalText(
+            PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "rights");
 
     /**
      * A reference to a resource from which the present resource is derived.
@@ -166,8 +157,8 @@ public interface DublinCore {
      * means of a string or number conforming to a formal identification
      * system.
      */
-	Property SOURCE = Property.internalText(
-    		PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "source");
+    Property SOURCE = Property.internalText(
+            PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "source");
 
     /**
      * The topic of the content of the resource. Typically, a Subject will
@@ -176,15 +167,15 @@ public interface DublinCore {
      * select a value from a controlled vocabulary or formal classification
      * scheme.
      */
-	Property SUBJECT = Property.internalTextBag(
-    		PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "subject");
+    Property SUBJECT = Property.internalTextBag(
+            PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "subject");
 
     /**
      * A name given to the resource. Typically, a Title will be a name by
      * which the resource is formally known.
      */
-	Property TITLE = Property.internalText(
-    		PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "title");
+    Property TITLE = Property.internalText(
+            PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "title");
 
     /**
      * The nature or genre of the content of the resource. Type includes terms
@@ -194,7 +185,7 @@ public interface DublinCore {
      * [DCMITYPE]). To describe the physical or digital manifestation of
      * the resource, use the Format element.
      */
-	Property TYPE = Property.internalText(
-    		PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "type");
+    Property TYPE = Property.internalText(
+            PREFIX_DC + Metadata.NAMESPACE_PREFIX_DELIMITER + "type");
 
 }
