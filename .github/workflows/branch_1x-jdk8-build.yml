@@ -19,14 +19,14 @@ name: branch_1x jdk8 build
 
 on:
   push:
-    branches: [ branch_1x ]
+    branches: [branch_1x]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
-        java: [ '1.8' ]
+        java: ['1.8']
 
     steps:
       - uses: actions/checkout@v2
